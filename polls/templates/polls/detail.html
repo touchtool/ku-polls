@@ -47,6 +47,41 @@ body {
   float: right;
 }
 
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button {background-color: #000000;}
+
+.button button :hover {
+  background-color: #ddd;
+  color: black;
+}
+
+input[type=submit] {
+  border: none;
+  background-color: #ff0000;
+  color: white;
+  padding: 15px 32px;
+  margin: 4px 2px;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #ddd;
+  color: black;
+}
+
 @media screen and (max-width: 500px) {
   .header a {
     float: none;
@@ -64,9 +99,9 @@ body {
 <body>
 
 <div class="header">
-  <a href=http://127.0.0.1:8000/polls class="logo">Polls</a>
+  <a href="{% url 'polls:index' %}" class="logo">Polls</a>
   <div class="header-right">
-    <a href=http://127.0.0.1:8000/polls>Home</a>
+    <a href="{% url 'polls:index' %}">Home</a>
     <a href=https://github.com/touchtool/ku-polls/>Github</a>
   </div>
 </div>
@@ -82,3 +117,5 @@ body {
 </fieldset>
 <input type="submit" value="Vote">
 </form>
+<button onclick="document.location='{% url 'polls:index' %}'"
+            class="button button1">Back To Polls</button>
