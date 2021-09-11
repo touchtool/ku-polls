@@ -44,7 +44,8 @@ class QuestionModelTests(TestCase):
         is in future
         """
         time = timezone.now() - datetime.timedelta(days=30)
-        future_question = Question(pub_date=time)
+        end_time = timezone.now() + datetime.timedelta(days=30)
+        future_question = Question(pub_date=time, end_date=end_time)
         self.assertIs(future_question.is_published(), False)
 
     def test_is_published_with_old_question(self):
@@ -53,7 +54,8 @@ class QuestionModelTests(TestCase):
         is older than 1 day.
         """
         time = timezone.now() - datetime.timedelta(days=1, seconds=1)
-        old_question = Question(pub_date=time)
+        end_time = timezone.now() + datetime.timedelta(days=30)
+        old_question = Question(pub_date=time, end_date=end_time)
         self.assertIs(old_question.is_published(), True)
 
     def test_is_published_with_recent_question(self):
@@ -62,7 +64,8 @@ class QuestionModelTests(TestCase):
         is within the last day.
         """
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
-        recent_question = Question(pub_date=time)
+        end_time = timezone.now() + datetime.timedelta(days=30)
+        recent_question = Question(pub_date=time, end_date=end_time)
         self.assertIs(recent_question.is_published(), True)
 
     def test_can_vote(self):
@@ -71,7 +74,8 @@ class QuestionModelTests(TestCase):
         is between starting date and end date.
         """
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
-        recent_question = Question(pub_date=time)
+        end_time = timezone.now() + datetime.timedelta(days=30)
+        recent_question = Question(pub_date=time, end_date=end_time)
         self.assertIs(recent_question.is_published(), True)
 
     def test_can_vote_before_polls(self):
