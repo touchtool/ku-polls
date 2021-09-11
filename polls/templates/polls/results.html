@@ -77,6 +77,29 @@ body {
   color: black;
 }
 
+.box-container
+{
+  width: 55%;
+  height: 5%;
+  padding: 10px;
+  border: 1px;
+  border-style: solid;
+  border-color: black;
+  background-color: #FCECAE;
+  margin: 0;
+}
+
+.float-right{
+  float: right;
+}
+
+.float-left{
+  float: left;
+}
+
+.bullet-remove{
+  list-style: outside none none;
+}
 @media screen and (max-width: 500px) {
   .header a {
     float: none;
@@ -100,15 +123,22 @@ body {
     <a href=https://github.com/touchtool/ku-polls/>Github</a>
   </div>
 </div>
-<h1>{{ question.question_text }}</h1>
+
+<center><h1>{{ question.question_text }}</h1></center>
 
 <ul>
 {% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+   <center><div class="box-container">
+   <li class="bullet-remove">
+        <span class ="float-left">{{ choice.choice_text }}</span> <span class ="float-right">{{ choice.votes }}
+            vote{{ choice.votes | pluralize }}</span>
+   </li>
+   </div></center>
 {% endfor %}
 </ul>
-
+<center>
 <button onclick="document.location='{% url 'polls:detail' question.id %}'"
         class="button button1">Vote again?</button>
 <button onclick="document.location='{% url 'polls:index' %}'"
             class="button button2">Back To Polls</button>
+</center>

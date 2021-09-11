@@ -71,6 +71,10 @@ body {
   color: black;
 }
 
+.bullet-remove{
+  list-style: outside none none;
+}
+
 @media screen and (max-width: 500px) {
   .header a {
     float: none;
@@ -96,7 +100,7 @@ body {
 </div>
 <center><h1 style="font-size:40px;"> Question list </h1></center>
 {% if latest_question_list %}
-    <ul>
+    <ul class="bullet-remove">
     {% for question in latest_question_list %}
         <div>
             <center><table width="500" border="1">
