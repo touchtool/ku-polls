@@ -60,7 +60,7 @@ class QuestionModelTests(TestCase):
 
     def test_is_published_with_recent_question(self):
         """
-        is_published() returns False for question whose pub_date
+        is_published() returns True for question whose pub_date
         is within the last day.
         """
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
