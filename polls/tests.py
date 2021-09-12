@@ -72,7 +72,7 @@ class QuestionModelTests(TestCase):
         can_vote returns True for question whose pub_date
         is between starting date and end date.
         """
-        time = timezone.now()
+        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
         end_time = timezone.now() + datetime.timedelta(days=30)
         recent_question = Question(pub_date=time, end_date=end_time)
         self.assertIs(recent_question.can_vote(), True)
@@ -82,12 +82,9 @@ class QuestionModelTests(TestCase):
         can_vote returns False for question whose pub_date
         is not published yet.
         """
-        time = timezone.now() - datetime.timedelta(days=1)
-        end_time = timezone.now() + datetime.timedelta(days=30)
-        recent_question = Question(pub_date=time, end_date=end_time)
-        if not recent_question.is_published():
-            self.assertIs(recent_question.can_vote(), False)
-        self.assertIs(recent_question.can_vote(), True)
+        time = timezone.now() + datetime.timedelta(days=30)
+        future_question = Question(pub_date=time)
+        self.assertIs(future_question.can_vote(), False)
 
     def test_can_vote_is_expired(self):
         """
