@@ -125,17 +125,24 @@ body {
 </div>
 
 <center><h1>{{ question.question_text }}</h1></center>
-
 <ul>
 {% for choice in question.choice_set.all %}
    <center><div class="box-container">
-   <li class="bullet-remove">
+   <tr><li class="bullet-remove">
         <span class ="float-left">{{ choice.choice_text }}</span> <span class ="float-right">{{ choice.votes }}
             vote{{ choice.votes | pluralize }}</span>
-   </li>
+   </li></tr>
    </div></center>
 {% endfor %}
 </ul>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <center><ul {% if message.tags %} class="{{ message.tags }}" style="color:black"
+                {% endif %}><p><strong>{{ message }}</strong></p></ul></center></div>
+    {% endfor %}
+</ul>
+{% endif %}
 <center>
 <button onclick="document.location='{% url 'polls:detail' question.id %}'"
         class="button button1">Vote again?</button>
