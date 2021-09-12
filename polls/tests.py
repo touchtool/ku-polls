@@ -80,7 +80,7 @@ class QuestionModelTests(TestCase):
     def test_can_vote_before_polls_published(self):
         """
         can_vote returns False for question whose pub_date
-        is not published yet.
+        is not yet published.
         """
         time = timezone.now() + datetime.timedelta(days=30)
         future_question = Question(pub_date=time)
