@@ -1,10 +1,11 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
 from .models import Choice, Question
+from django.contrib import messages
 
 
 class IndexView(generic.ListView):
@@ -37,12 +38,36 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+def index(request):
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    text = {"latest_question_list": latest_question_list}
+    return render(request, 'polls/index.html', text)
+
+
+def detail(request, question_id):
+    try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise HttpResponse(f"Question {question_id} doesn't exist")
+
+    if question.pub_date > timezone:
+        messages.error(request, f"Question {question_id} isn't available")
+        return redirect('polls/index')
+    return render(request, 'polls/detail', {'question': question})
+
+
+def results(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/results', {'question': question})
+
+
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
+        messages.error(request, "You didn't make a choice")
         return render(request, 'polls/detail.html', {
             'question': question,
             'error_message': "You didn't select a choice.",
@@ -50,6 +75,7 @@ def vote(request, question_id):
     else:
         selected_choice.votes += 1
         selected_choice.save()
+        messages.success(request, "Your choice is recorded. Thank you for summit.")
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
