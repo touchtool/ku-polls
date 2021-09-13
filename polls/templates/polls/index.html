@@ -75,6 +75,10 @@ body {
   list-style: outside none none;
 }
 
+.color-font{
+  color:red;
+  font-size: 30px;
+}
 @media screen and (max-width: 500px) {
   .header a {
     float: none;
@@ -99,14 +103,8 @@ body {
   </div>
 </div>
 <center><h1 style="font-size:40px;"> Question list </h1></center>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
 
-{% endif %}
+
 {% if latest_question_list %}
     <ul class="bullet-remove">
     {% for question in latest_question_list %}
@@ -128,4 +126,11 @@ body {
     </ul>
 {% else %}
     <p>No polls are available.</p>
+{% endif %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <center class="color-font"><ul {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</ul></center>
+    {% endfor %}
+</ul>
 {% endif %}

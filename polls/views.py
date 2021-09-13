@@ -1,64 +1,28 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
-from django.views import generic
-from django.utils import timezone
 
 from .models import Choice, Question
 from django.contrib import messages
 
 
-class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
-
-    def get_queryset(self):
-        """
-        Return the last five published questions (not including those set to be
-        published in the future).
-        """
-        return Question.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:5]
-
-
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = 'polls/detail.html'
-
-    def get_queryset(self):
-        """
-        Excludes any questions that aren't published yet.
-        """
-        return Question.objects.filter(pub_date__lte=timezone.now())
-
-
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = 'polls/results.html'
-
-
 def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    latest_question_list = Question.objects.order_by('-pub_date')[:]
     text = {"latest_question_list": latest_question_list}
     return render(request, 'polls/index.html', text)
 
 
 def detail(request, question_id):
-    try:
-        question = Question.objects.get(pk=question_id)
-    except Question.DoesNotExist:
-        raise HttpResponse(f"Question {question_id} doesn't exist")
-
-    if question.pub_date > timezone:
-        messages.error(request, f"Question {question_id} isn't available")
-        return redirect('polls/index')
-    return render(request, 'polls/detail', {'question': question})
+    question = get_object_or_404(Question, pk=question_id)
+    if question.can_vote():
+        return render(request, 'polls/detail.html', {'question': question})
+    messages.error(request, "Poll didn't available now")
+    return HttpResponseRedirect(reverse('polls:index'))
 
 
 def results(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/results', {'question': question})
+    return render(request, 'polls/results.html', {'question': question})
 
 
 def vote(request, question_id):

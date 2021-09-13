@@ -9,6 +9,9 @@ __pycache__/
 # Ignore .idea files
 .idea/
 
+# Ignore sensitive data
+source_polls.env
+
 # Distribution / packaging
 .Python
 build/
