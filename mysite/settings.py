@@ -20,18 +20,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-"""DEBUG = config('DEBUG', default=False, cast=bool)
-SECRET_KEY = config('SECRET_KEY')
-
-DATABASES = {
-     # use cast=db_url requires package dj-database-url
-     'default': config('DATABASE_URL', 
-                    default='sqlite:///'+BASE_DIR+'db.sqlite3',
-                    cast=db_url
-                ),
-     } 
-}
-"""
 
 SECRET_KEY = config('SECRET_KEY')
 
