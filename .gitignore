@@ -10,7 +10,7 @@ __pycache__/
 .idea/
 
 # Ignore sensitive data
-source_polls.env
+.env
 
 # Distribution / packaging
 .Python

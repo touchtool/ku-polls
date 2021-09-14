@@ -16,7 +16,7 @@ def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     if question.can_vote():
         return render(request, 'polls/detail.html', {'question': question})
-    messages.error(request, "Poll didn't available now")
+    messages.error(request, "Poll doesn't available now")
     return HttpResponseRedirect(reverse('polls:index'))
 
 
