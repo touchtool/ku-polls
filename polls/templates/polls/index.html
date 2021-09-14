@@ -46,7 +46,39 @@ body {
 .header-right {
   float: right;
 }
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 
+.button1 {background-color: #4CAF50;} /* Green */
+.button2 {background-color: #008CBA;} /* Blue */
+
+.button1:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.button2:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.bullet-remove{
+  list-style: outside none none;
+}
+
+.color-font{
+  color:red;
+  font-size: 30px;
+}
 @media screen and (max-width: 500px) {
   .header a {
     float: none;
@@ -64,22 +96,28 @@ body {
 <body>
 
 <div class="header">
-  <a href="" class="logo">Polls</a>
+  <a href="{% url 'polls:index' %}" class="logo">Polls</a>
   <div class="header-right">
     <a href="">Home</a>
     <a href=https://github.com/touchtool/ku-polls/>Github</a>
   </div>
 </div>
-<center><h1> Question list </h1></center>
+<center><h1 style="font-size:40px;"> Question list </h1></center>
+
+
 {% if latest_question_list %}
-    <ul>
+    <ul class="bullet-remove">
     {% for question in latest_question_list %}
         <div>
             <center><table width="500" border="1">
 	            <tbody>
 	                <tr>
 	                    <td bgcolor=#FFFFE0>
-                            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+                            <center><li><a style="font-size:25px;">{{ question.question_text }} </a></li></center>
+                            <center><button onclick="document.location='{% url 'polls:detail' question.id %}'"
+                            class="button button1">Vote Now</button>
+                            <button onclick="document.location='{% url 'polls:results' question.id %}'"
+                                    class="button button2">Results</button></center>
                     </tr>
                 </tbody>
             </table></center>
@@ -88,4 +126,11 @@ body {
     </ul>
 {% else %}
     <p>No polls are available.</p>
+{% endif %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <center class="color-font"><ul {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</ul></center>
+    {% endfor %}
+</ul>
 {% endif %}
