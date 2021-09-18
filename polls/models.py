@@ -36,6 +36,8 @@ class Question(models.Model):
              True if voting is currently allowed for this question.
         """
         now = timezone.now()
+        if self.end_date == None:
+            return self.pub_date <= now
         return self.pub_date <= now <= self.end_date
 
 
