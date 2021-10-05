@@ -1,16 +1,21 @@
+"""Admin pages."""
 from django.contrib import admin
 
 from .models import Question, Choice
 
 
 class ChoiceInline(admin.TabularInline):
+    """Choice show in admin page."""
+
     model = Choice
     extra = 3
 
 
 class QuestionAdmin(admin.ModelAdmin):
+    """Question show in admin page."""
+
     fieldsets = [
-        (None,               {'fields': ['question_text']}),
+        (None, {'fields': ['question_text']}),
         ('Date information', {'fields': ['pub_date', 'end_date'], 'classes': ['collapse']}),
     ]
     inlines = [ChoiceInline]
