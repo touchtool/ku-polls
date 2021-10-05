@@ -1,5 +1,6 @@
 # KU Polls
-
+[![Build Status](https://app.travis-ci.com/touchtool/ku-polls.svg?branch=main)](https://app.travis-ci.com/touchtool/ku-polls)
+[![codecov](https://codecov.io/gh/touchtool/ku-polls/branch/main/graph/badge.svg?token=OKTDNJ2MYN)](https://codecov.io/gh/touchtool/ku-polls)    
 A web application for conducting polls at [Kasetsart University](https://www.ku.ac.th/th)
 
 ## Project Documents
