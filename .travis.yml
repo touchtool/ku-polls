@@ -2,7 +2,7 @@ language: python
 
 
 env:
-  - SECRET_KEY="HELLOWORLD" DEBUG=TRUE
+  - SECRET_KEY="HELLOWORLD" DEBUG=True
 # you can use Python 3.7 instead
 python: "3.7"
 
