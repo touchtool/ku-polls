@@ -100,6 +100,13 @@ body {
   <div class="header-right">
     <a href="">Home</a>
     <a href=https://github.com/touchtool/ku-polls/>Github</a>
+      <a>
+          {% if user.is_authenticated %}
+            Hello, {{ user.username }}
+          {% else %}
+          <a href="{% url 'login' %}">Login</a>
+          {% endif %}
+      </a>
   </div>
 </div>
 <center><h1 style="font-size:40px;"> Question list </h1></center>
