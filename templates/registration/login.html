@@ -1,17 +1,37 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style2.css' %}" xmlns="http://www.w3.org/1999/html">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <html>
-<body>
-<h2>Login</h2>
-<form method="post">
+<body><div class="header">
+  <a href="{% url 'polls:index' %}" class="logo">Polls</a>
+  <div class="header-right">
+    <a href="{% url 'polls:index' %}">Home</a>
+    <a href=https://github.com/touchtool/ku-polls/>Github</a>
+      <a>
+          {% if user.is_authenticated %}
+          Hello, {{ user.username }}
+          <a href="{% url 'logout' %}">Logout</a>
+          {% else %}
+          <a href="{% url 'login' %}">Login</a>
+          {% endif %}
+      </a>
+  </div>
+</div>
+<center><h2 style="font-size:40px;">Login</h2></center>
+<center><form method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <p>
-  <button type="submit">Login</button>
+    <button class="button button" type="submit">Login</button>
   </p>
   <input type="hidden" name="next" value="{{next}}"/>
- </form>
+ </form></center>
+
 {# If you have written a password_reset template, then add here #}
-<p>
-<a href="{% url 'password_reset' %}">Forgot password?</a>
-</p>
+<center><p>
+  <a class="button button" href="{% url 'password_reset' %}">Forgot password?</a>
+  <a class="button button" href="{% url 'signup' %}">signup</a>
+</p></center>
 </body>
 </html>

@@ -18,17 +18,21 @@
       </a>
   </div>
 </div>
-<head>
-    <title>Sorry to see you go</title>
-</head>
 <center>
-    <h2 style="font-size:40px;">You Are Logged out</h2>
-</center>
-<center>
-    Want to vote again?
-</center>
-<center>
-    <a class="button button" href="{% url 'login'%}">Login again</a>
+<h2 style="font-size:40px;">SignUp</h2>
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button class="button button" type="submit">Sign up</button>
+  </form>
 </center>
 </body>
-</html>
+
