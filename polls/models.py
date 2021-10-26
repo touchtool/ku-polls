@@ -54,6 +54,7 @@ class Choice(models.Model):
 
     @property
     def votes(self) -> int:
+        """Return number of vote count."""
         count = Votes.objects.filter(choice=self).count()
         return count
 
