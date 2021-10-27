@@ -13,12 +13,8 @@ def signup(request):
             form.save()
             username = form.cleaned_data.get('username')
             raw_passwd = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=raw_passwd)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                else:
-                    messages.success(request, "Success signup!")
+            user = form.save()
+            login(request, user, raw_passwd)
             return redirect('polls:index')
         else:
             # what if form is not valid?
