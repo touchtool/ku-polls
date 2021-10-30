@@ -1,6 +1,6 @@
 """Signup."""
 import logging
-from django.contrib.auth.signals import user_logged_in, user_login_failed
+from django.contrib.auth.signals import user_logged_in, user_login_failed, user_logged_out
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -30,6 +30,7 @@ def signup(request):
 
 @receiver(user_logged_in)
 def user_logged_in_callback(sender, request, user, **kwargs):
+    """Send signal when user login success."""
     ip = request.META.get('REMOTE_ADDR')
     logger = logging.getLogger('polls')
     logger.info(f"{user} logged in from {ip}")
@@ -37,6 +38,15 @@ def user_logged_in_callback(sender, request, user, **kwargs):
 
 @receiver(user_login_failed)
 def user_logged_in_fail(sender, credentials, request, **kwargs):
+    """Send signal when user login fail."""
     ip = request.META.get('REMOTE_ADDR')
     logger = logging.getLogger('polls')
     logger.warning(f"Invalid login attempt for {credentials['username']} from {ip}")
+
+
+@receiver(user_logged_out)
+def sig_user_logged_out(sender, user, request, **kwargs):
+    """Send signal when user logout."""
+    ip = request.META.get('REMOTE_ADDR')
+    logger = logging.getLogger('polls')
+    logger.info(f"logged out for {user} from {ip}")
