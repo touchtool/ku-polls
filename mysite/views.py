@@ -1,8 +1,11 @@
 """Signup."""
+import logging
+from django.contrib.auth.signals import user_logged_in, user_login_failed
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.dispatch import receiver
 
 
 def signup(request):
@@ -23,3 +26,17 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+
+@receiver(user_logged_in)
+def user_logged_in_callback(sender, request, user, **kwargs):
+    ip = request.META.get('REMOTE_ADDR')
+    logger = logging.getLogger('polls')
+    logger.info(f"{user} logged in from {ip}")
+
+
+@receiver(user_login_failed)
+def user_logged_in_fail(sender, request, **kwargs):
+    ip = request.META.get('REMOTE_ADDR')
+    logger = logging.getLogger('polls')
+    logger.warning(f"Invalid login attempt from {ip}")
