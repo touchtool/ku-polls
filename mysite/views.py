@@ -36,7 +36,7 @@ def user_logged_in_callback(sender, request, user, **kwargs):
 
 
 @receiver(user_login_failed)
-def user_logged_in_fail(sender, request, **kwargs):
+def user_logged_in_fail(sender, credentials, request, **kwargs):
     ip = request.META.get('REMOTE_ADDR')
     logger = logging.getLogger('polls')
-    logger.warning(f"Invalid login attempt from {ip}")
+    logger.warning(f"Invalid login attempt for {credentials['username']} from {ip}")
