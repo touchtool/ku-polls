@@ -13,4 +13,20 @@ A web application for conducting polls at [Kasetsart University](https://www.ku.
 
 - [Iteration 1 Plan](../../wiki/iteration%201)    
 - [Iteration 2 Plan](../../wiki/iteration%202)   
-- [Iteration 3 Plan](../../wiki/iteration%203)   
+- [Iteration 3 Plan](../../wiki/iteration%203) 
+
+## How to run
+Install the Ku-polls.
+```
+python3 manage.py migrate
+python3 manage.py loaddata users polls
+```
+
+## Running KU Polls
+
+Users provided by the initial data (users.json):
+
+| Username   | Password     |
+|-----------:|-------------:|
+| Demo1234   | votehello    |
+| qwerty     | votenight    |
